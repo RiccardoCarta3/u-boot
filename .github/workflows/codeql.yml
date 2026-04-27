@@ -89,17 +89,24 @@ jobs:
       if: matrix.build-mode == 'manual'
       shell: bash
       run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            build-essential bc bison flex libssl-dev
-        
-          export HOSTCFLAGS="-Wno-error"
-        
-          make distclean
-          make defconfig
-        
-          make scripts -j1
-          make -j2
+        echo "== START BUILD STEP =="
+    
+        echo "Updating packages..."
+        sudo apt-get update
+    
+        echo "Installing dependencies..."
+        sudo apt-get install -y build-essential bc bison flex libssl-dev
+    
+        echo "Cleaning project..."
+        make distclean
+    
+        echo "Running defconfig..."
+        make defconfig
+    
+        echo "Starting build..."
+        make -j2
+    
+        echo "== BUILD FINISHED =="
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
