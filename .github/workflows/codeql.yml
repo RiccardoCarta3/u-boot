@@ -79,18 +79,6 @@ jobs:
         # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
         # queries: security-extended,security-and-quality
 
-    - name: Debug CodeQL query compilation
-      run: |
-        echo "=== Struttura cartelle ==="
-        find ./codeql -type f
-        echo ""
-        echo "=== Contenuto qlpack.yml ==="
-        cat ./codeql/custom/qlpack.yml
-        echo ""
-        echo "=== Provo a compilare la query manualmente ==="
-        /opt/hostedtoolcache/CodeQL/2.25.2/x64/codeql/codeql query compile ./codeql/custom/my-query.ql 2>&1 || echo "ERRORE COMPILAZIONE"
-
-
     # If the analyze step fails for one of the languages you are analyzing with
     # "We were unable to automatically build your code", modify the matrix above
     # to set the build mode to "manual" for that language. Then modify this step
@@ -101,7 +89,7 @@ jobs:
       if: matrix.build-mode == 'manual'
       shell: bash
       run: |
-        echo "== START BUILD STEP =="
+
     
         sudo apt-get update
         sudo apt-get install -y build-essential bc bison flex libssl-dev libsdl1.2-dev
@@ -111,7 +99,7 @@ jobs:
     
         make -j2 HOSTCFLAGS="-fcommon" CFLAGS="-fcommon"
     
-        echo "== BUILD FINISHED =="
+
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
