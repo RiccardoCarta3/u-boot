@@ -1,9 +1,14 @@
 /**
+ * @name Network byte swap taint to memcpy
+ * @description Trova taint flow da ntoh* verso il terzo argomento di memcpy
  * @kind path-problem
+ * @problem.severity warning
+ * @id cpp/network-taint-memcpy
  */
 
 import cpp
 import semmle.code.cpp.dataflow.TaintTracking
+import MyTaint::PathGraph
 
 class NetworkByteSwap extends Expr {
   NetworkByteSwap () {
@@ -40,7 +45,7 @@ import semmle.code.cpp.dataflow.DataFlow
 }
 
 module MyTaint = TaintTracking::Global<MyConfig>;
-import MyTaint::PathGraph
+
 
 from MyTaint::PathNode source, MyTaint::PathNode sink
 where MyTaint::flowPath(source, sink) 
