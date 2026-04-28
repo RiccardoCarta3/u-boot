@@ -79,12 +79,16 @@ jobs:
         # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
         # queries: security-extended,security-and-quality
 
-    - name: Debug CodeQL query
+    - name: Debug CodeQL query compilation
       run: |
-        echo "=== Contenuto cartella codeql ==="
+        echo "=== Struttura cartelle ==="
         find ./codeql -type f
-        echo "=== Contenuto query ==="
-        cat ./codeql/custom/my-query.ql
+        echo ""
+        echo "=== Contenuto qlpack.yml ==="
+        cat ./codeql/custom/qlpack.yml
+        echo ""
+        echo "=== Provo a compilare la query manualmente ==="
+        /opt/hostedtoolcache/CodeQL/2.25.2/x64/codeql/codeql query compile ./codeql/custom/my-query.ql 2>&1 || echo "ERRORE COMPILAZIONE"
 
 
     # If the analyze step fails for one of the languages you are analyzing with
