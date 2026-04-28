@@ -8,7 +8,9 @@
 
 import cpp
 import semmle.code.cpp.dataflow.TaintTracking
-import MyTaint::PathGraph
+
+import semmle.code.cpp.dataflow.DataFlow
+
 
 class NetworkByteSwap extends Expr {
   NetworkByteSwap () {
@@ -34,7 +36,7 @@ module MyConfig implements DataFlow::ConfigSig {
     )
   }
 
-import semmle.code.cpp.dataflow.DataFlow
+
 
    predicate isBarrier(DataFlow::Node node) {
     exists(DataFlow::Node n, RelationalOperation ro |
@@ -45,7 +47,7 @@ import semmle.code.cpp.dataflow.DataFlow
 }
 
 module MyTaint = TaintTracking::Global<MyConfig>;
-
+import MyTaint::PathGraph
 
 from MyTaint::PathNode source, MyTaint::PathNode sink
 where MyTaint::flowPath(source, sink) 
