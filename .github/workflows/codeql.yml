@@ -95,7 +95,7 @@ jobs:
     
         make defconfig
     
-        make -j2 CFLAGS="-fcommon"
+        make -j2 HOSTCFLAGS="-fcommon" 
     
 
 
